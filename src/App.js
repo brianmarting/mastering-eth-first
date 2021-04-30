@@ -15,18 +15,15 @@ const App = () => {
   useEffect(() => {
     const init = async () => {
       const web3 = await getWeb3();
-      window.web3 = web3;
       const [account] = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId();
-      console.log(web3);
-      console.log(account);
 
       const socialMusicContract = await new web3.eth.Contract(
         SocialMusic.abi,
-        SocialMusic.networks[networkId].address
+        SocialMusic.networks[networkId] && SocialMusic.networks[networkId].address
       );
-      window.contract = socialMusicContract;
-      socialMusicContract.events.EmitUser().on('data', console.log)
+
+      console.log(socialMusicContract)
 
       setAccount(account);
       setSocialMusicInstance(socialMusicContract);
