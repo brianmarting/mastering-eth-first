@@ -13,10 +13,8 @@ contract SocialMusic {
         address[] following;
     }
 
-    mapping(address => User) public users;
-    mapping(address => bool) public userExists;
-
-    event EmitUser(address _addr);
+    mapping(address => User) users;
+    mapping(address => bool) userExists;
 
     function addSong(string memory _songName) public {
         require(bytes(_songName).length > 0 && bytes(_songName).length <= 100, "Songname is empty or too long.");
@@ -29,7 +27,6 @@ contract SocialMusic {
         users[msg.sender] = User(_name, _state, _age, users[msg.sender].recommendations, users[msg.sender].following);
         userExists[msg.sender] = true;
         usersList.push(msg.sender);
-        emit EmitUser(msg.sender);
     }
     function follow(address _user) public {
         require(_user != address(0), "Address should not be initial address value");
